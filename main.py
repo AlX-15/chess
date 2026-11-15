@@ -23,6 +23,14 @@ def pawn(start, end):
         return True
 
 
+def bishop(start, end): # слон
+    if abs(int(end[1]) - int(start[1])) != abs(letters.index(end[0]) - letters.index(start[0])):
+        print('\nТакой ход невозможен! Попробуйте заново')
+        return False
+    else:
+        return True
+
+
 def knight(start, end): #конь
     dx = abs(int(end[1]) - int(start[1]))
     dy = abs(letters.index(end[0]) - letters.index(start[0]))
@@ -54,6 +62,8 @@ def MoveBoard(board):
         valid = pawn(from_which, to_which)
     elif placements[from_which] in ('n', 'N'):
         valid = knight(from_which, to_which)
+    elif placements[from_which] in ('b', 'B'):
+        valid = bishop(from_which, to_which)
     elif placements[from_which] == '.':
         print('\nТакой ход невозможен! Попробуйте заново')
         valid = False
