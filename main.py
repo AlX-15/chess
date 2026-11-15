@@ -9,19 +9,26 @@ placements = {'a8': 'r', 'b8': 'n', 'c8': 'b', 'd8': 'q', 'e8': 'k', 'f8': 'b', 
               }
 
 
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+
+
 def pawn(start, end):
     if (((start[0] != end[0] and placements[end] == '.') or
-            (abs(int(end[1]) - int(start[1])) >= 2 and int(start[1]) not in (2, 7))) or
-            (placements[end] != '.' and start[0] == end[0])):
-        print('Такой ход невозможен! Попробуйте заново')
+        (abs(int(end[1]) - int(start[1])) >= 2 and int(start[1]) not in (2, 7))) or
+        (placements[end] != '.' and start[0] == end[0])) or \
+        (abs(int(end[1]) - int(start[1])) > 2 and int(start[1]) in (2, 7)):
+        print('\nТакой ход невозможен! Попробуйте заново')
         return False
     else:
         return True
 
 
 def knight(start, end): #конь
-    if start[0] == end[0] or start[1] == end[1]:
-        print('Такой ход невозможен! Попробуйте заново')
+    dx = abs(int(end[1]) - int(start[1]))
+    dy = abs(letters.index(end[0]) - letters.index(start[0]))
+
+    if (dx, dy) not in ((2, 1), (1, 2)):
+        print('\nТакой ход невозможен! Попробуйте заново')
         return False
     else:
         return True
@@ -44,13 +51,17 @@ def MoveBoard(board):
     from_which = input("> С какой позиции делать ход? ").lower().replace(' ', '')
     to_which = input("> На какую позицию сделать ход? ").lower().replace(' ', '')
     if placements[from_which] in ('p', 'P'):
-        p = pawn(from_which, to_which)
-        if not p:
-            return
-    if placements[from_which] in ('n', 'N'):
-        n = knight(from_which, to_which)
-        if not n:
-            return
+        valid = pawn(from_which, to_which)
+    elif placements[from_which] in ('n', 'N'):
+        valid = knight(from_which, to_which)
+    elif placements[from_which] == '.':
+        print('\nТакой ход невозможен! Попробуйте заново')
+        valid = False
+    else:
+        valid = True
+
+    if not valid:
+        return
     placements[to_which] = placements[from_which]
     placements[from_which] = '.'
 
