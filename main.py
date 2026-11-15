@@ -19,6 +19,14 @@ def pawn(start, end):
         return True
 
 
+def knight(start, end): #конь
+    if start[0] == end[0] or start[1] == end[1]:
+        print('Такой ход невозможен! Попробуйте заново')
+        return False
+    else:
+        return True
+
+
 def printBoard(board):
     print('\n')
     print('     A B C D E F G H\n')
@@ -35,9 +43,13 @@ def MoveBoard(board):
     printBoard(placements)
     from_which = input("> С какой позиции делать ход? ").lower().replace(' ', '')
     to_which = input("> На какую позицию сделать ход? ").lower().replace(' ', '')
-    if placements[from_which] == 'p' or placements[from_which] == 'P':
+    if placements[from_which] in ('p', 'P'):
         p = pawn(from_which, to_which)
         if not p:
+            return
+    if placements[from_which] in ('n', 'N'):
+        n = knight(from_which, to_which)
+        if not n:
             return
     placements[to_which] = placements[from_which]
     placements[from_which] = '.'
