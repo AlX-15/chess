@@ -58,6 +58,15 @@ def rook(start, end): # ладья
         return False
 
 
+def queen(start, end):
+    if (start[0] == end[0] or start[1] == end[1]) or \
+        abs(int(end[1]) - int(start[1])) == abs(letters.index(end[0]) - letters.index(start[0])):
+        return True
+    else:
+        print('\nТакой ход невозможен! Попробуйте заново')
+        return False
+
+
 def printBoard(board):
     print('\n')
     print('     A B C D E F G H\n')
@@ -84,6 +93,8 @@ def MoveBoard(board):
         valid = bishop(from_which, to_which)
     elif placements[from_which] in ('r', 'R'):
         valid = rook(from_which, to_which)
+    elif placements[from_which] in ('q', 'Q'):
+        valid = queen(from_which, to_which)
     elif placements[from_which] == '.':
         print('\nТакой ход невозможен! Попробуйте заново')
         valid = False
