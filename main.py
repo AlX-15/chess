@@ -67,6 +67,17 @@ def queen(start, end):
         return False
 
 
+def king(start, end):
+    dx = abs(int(end[1]) - int(start[1]))
+    dy = abs(letters.index(end[0]) - letters.index(start[0]))
+
+    if (dx, dy) not in ((1, 1), (1, 0), (0, 1)):
+        print('\nТакой ход невозможен! Попробуйте заново')
+        return False
+    else:
+        return True
+
+
 def printBoard(board):
     print('\n')
     print('     A B C D E F G H\n')
@@ -95,6 +106,8 @@ def MoveBoard(board):
         valid = rook(from_which, to_which)
     elif placements[from_which] in ('q', 'Q'):
         valid = queen(from_which, to_which)
+    elif placements[from_which] in ('k', 'K'):
+        valid = king(from_which, to_which)
     elif placements[from_which] == '.':
         print('\nТакой ход невозможен! Попробуйте заново')
         valid = False
