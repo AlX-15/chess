@@ -12,6 +12,14 @@ placements = {'a8': 'r', 'b8': 'n', 'c8': 'b', 'd8': 'q', 'e8': 'k', 'f8': 'b', 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 
+def fits(position1, position2):
+    if position1 in placements.keys() and position2 in placements.keys():
+        return True
+    else:
+        print('\nОдной из этих клеток нет на шахматной доске! Попробуйте снова')
+        return False
+
+
 def pawn(start, end):
     if (((start[0] != end[0] and placements[end] == '.') or
         (abs(int(end[1]) - int(start[1])) >= 2 and int(start[1]) not in (2, 7))) or
@@ -31,7 +39,7 @@ def bishop(start, end): # слон
         return True
 
 
-def knight(start, end): #конь
+def knight(start, end): # конь
     dx = abs(int(end[1]) - int(start[1]))
     dy = abs(letters.index(end[0]) - letters.index(start[0]))
 
@@ -40,6 +48,14 @@ def knight(start, end): #конь
         return False
     else:
         return True
+
+
+def rook(start, end): # ладья
+    if start[0] == end[0] or start[1] == end[1]:
+        return True
+    else:
+        print('\nТакой ход невозможен! Попробуйте заново')
+        return False
 
 
 def printBoard(board):
@@ -58,12 +74,16 @@ def MoveBoard(board):
     printBoard(placements)
     from_which = input("> С какой позиции делать ход? ").lower().replace(' ', '')
     to_which = input("> На какую позицию сделать ход? ").lower().replace(' ', '')
-    if placements[from_which] in ('p', 'P'):
+    if not fits(from_which, to_which):
+        valid = False
+    elif placements[from_which] in ('p', 'P'):
         valid = pawn(from_which, to_which)
     elif placements[from_which] in ('n', 'N'):
         valid = knight(from_which, to_which)
     elif placements[from_which] in ('b', 'B'):
         valid = bishop(from_which, to_which)
+    elif placements[from_which] in ('r', 'R'):
+        valid = rook(from_which, to_which)
     elif placements[from_which] == '.':
         print('\nТакой ход невозможен! Попробуйте заново')
         valid = False
@@ -74,7 +94,6 @@ def MoveBoard(board):
         return
     placements[to_which] = placements[from_which]
     placements[from_which] = '.'
-
 
 
 
