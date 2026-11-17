@@ -108,7 +108,13 @@ def MoveBoard(board, player):
         print('Ход черных')
     from_which = input("> С какой позиции делать ход? ").lower().replace(' ', '')
     to_which = input("> На какую позицию сделать ход? ").lower().replace(' ', '')
-    if not fits(from_which, to_which):
+    if player % 2 != 0 and placements[from_which] in ('p', 'n', 'b', 'r', 'q', 'k'):
+        print("\nВы не можете выбрать фигуру противника! Попробуйте снова")
+        valid = False
+    elif player % 2 == 0 and placements[from_which] in ('P', 'N', 'B', 'R', 'Q', 'K'):
+        print("\nВы не можете выбрать фигуру противника! Попробуйте снова")
+        valid = False
+    elif not fits(from_which, to_which):
         valid = False
     elif placements[from_which] in ('p', 'P'):
         valid = pawn(from_which, to_which)
