@@ -1,3 +1,9 @@
+print("""\nПравила игры:
+1) Игрок белых ходит большими буквами, игрок черных - маленькими
+2) 
+\n""")
+
+
 placements = {'a8': 'r', 'b8': 'n', 'c8': 'b', 'd8': 'q', 'e8': 'k', 'f8': 'b', 'g8': 'n', 'h8': 'r',
               'a7': 'p', 'b7': 'p', 'c7': 'p', 'd7': 'p', 'e7': 'p', 'f7': 'p', 'g7': 'p', 'h7': 'p',
               'a6': '.', 'b6': '.', 'c6': '.', 'd6': '.', 'e6': '.', 'f6': '.', 'g6': '.', 'h6': '.',
@@ -90,8 +96,16 @@ def printBoard(board):
     print('\n     A B C D E F G H\n')
 
 
-def MoveBoard(board):
+i = 1
+
+
+def MoveBoard(board, player):
+    global i
     printBoard(placements)
+    if player % 2 != 0:
+        print('Ход белых')
+    else:
+        print('Ход черных')
     from_which = input("> С какой позиции делать ход? ").lower().replace(' ', '')
     to_which = input("> На какую позицию сделать ход? ").lower().replace(' ', '')
     if not fits(from_which, to_which):
@@ -115,11 +129,12 @@ def MoveBoard(board):
         valid = True
 
     if not valid:
+        i -= 1
         return
     placements[to_which] = placements[from_which]
     placements[from_which] = '.'
 
 
-
 while True:
-    MoveBoard(placements)
+    MoveBoard(placements, i)
+    i += 1
